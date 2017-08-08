@@ -18,7 +18,7 @@ var prepareTransaction = function prepareTransaction(transaction, keys, secondSe
 		signature: _crypto2.default.sign(transaction, keys)
 	});
 
-	var signedTransaction = secondSecret ? secondSignTransaction(singleSignedTransaction, secondSecret) : singleSignedTransaction;
+	var signedTransaction = secondSecret && transaction.type !== '1' ? secondSignTransaction(singleSignedTransaction, secondSecret) : singleSignedTransaction;
 
 	var transactionWithId = Object.assign({}, signedTransaction, {
 		id: _crypto2.default.getId(signedTransaction)
