@@ -1,4 +1,4 @@
 {
 	"plugins": ["babel-polyfill"],
-	"presets": ["env"]
+	"presets": ["env","es2017"]
 }
