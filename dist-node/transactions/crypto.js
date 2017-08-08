@@ -262,8 +262,8 @@ function createTransactionBuffer(transaction, options) {
 			DATA: 64
 		};
 
-		var totalBytes = Object.keys(typeSizes).reduce(function (sum, key) {
-			return sum + typeSizes[key];
+		var totalBytes = Object.values(typeSizes).reduce(function (sum, typeSize) {
+			return sum + typeSize;
 		}, 0);
 
 		return new _bytebuffer2.default(totalBytes + assetSize, true);

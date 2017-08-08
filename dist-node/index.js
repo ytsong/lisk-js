@@ -1,5 +1,7 @@
 'use strict';
 
+require('babel-polyfill');
+
 var _jsNacl = require('js-nacl');
 
 var _jsNacl2 = _interopRequireDefault(_jsNacl);
@@ -54,12 +56,12 @@ var _mnemonic2 = _interopRequireDefault(_mnemonic);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-global.Buffer = global.Buffer || _buffer2.default.Buffer; /**
-                                                           * Index module comprising all submodules of lisk-js.
-                                                           * @module lisk
-                                                           * @main lisk
-                                                           */
-
+/**
+ * Index module comprising all submodules of lisk-js.
+ * @module lisk
+ * @main lisk
+ */
+global.Buffer = global.Buffer || _buffer2.default.Buffer;
 
 global.naclFactory = _jsNacl2.default;
 
