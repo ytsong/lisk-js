@@ -49,7 +49,7 @@ yuidoc
 
 # Distribution folders
 dist-browser
-dist-node
+# dist-node
 
 # Built test files
 browsertest/browsertest.js
