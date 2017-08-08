@@ -8,4 +8,3 @@ test/.coverage-unit
 coveralls
 coverage/
 dist-browser/
-dist-node/
