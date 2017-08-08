@@ -150,5 +150,10 @@ describe('signature module', () => {
 				});
 			});
 		});
+
+		describe('should not have signSignature itself', () => {
+			const sign = createSignature('secret', 'second secret');
+			(sign).should.not.have.property('signSignature');
+		});
 	});
 });
