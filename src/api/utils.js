@@ -35,10 +35,10 @@ module.exports = {
 
 		return isArray
 			? obj.map(trim)
-			: Object.keys(obj)
-				.reduce((accumulator, key) => {
+			: Object.entries(obj)
+				.reduce((accumulator, [key, value]) => {
 					const trimmedKey = trim(key);
-					const trimmedValue = trim(obj[key]);
+					const trimmedValue = trim(value);
 					return Object.assign({}, accumulator, {
 						[trimmedKey]: trimmedValue,
 					});
@@ -51,10 +51,10 @@ module.exports = {
 	 * @return query string
 	 */
 	toQueryString(obj) {
-		const parts = Object.keys(obj)
-			.reduce((accumulator, key) => [
+		const parts = Object.entries(obj)
+			.reduce((accumulator, [key, value]) => [
 				...accumulator,
-				`${encodeURIComponent(key)}=${encodeURI(obj[key])}`,
+				`${encodeURIComponent(key)}=${encodeURI(value)}`,
 			], []);
 
 		return parts.join('&');
