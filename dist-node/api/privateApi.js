@@ -1,6 +1,20 @@
 'use strict';
 
-var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
+var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }(); /*
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          * Copyright © 2017 Lisk Foundation
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          *
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          * See the LICENSE file at the top-level directory of this distribution
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          * for licensing information.
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          *
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          * Unless otherwise agreed in a custom licensing agreement with the Lisk Foundation,
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          * no part of this software, including this file, may be copied, modified,
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          * propagated, or distributed except according to the terms contained in the
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          * LICENSE file.
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          *
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          * Removal or modification of this copyright notice is prohibited.
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          *
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          */
+
 
 var _popsicle = require('popsicle');
 
@@ -13,6 +27,8 @@ var _utils2 = _interopRequireDefault(_utils);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+var GET = 'GET';
 
 /**
  * @method netHashOptions
@@ -204,92 +220,30 @@ function serialiseHttpData(data) {
 }
 
 /**
- * @method checkRequest
+ * @method createRequestObject
+ * @param method
  * @param requestType
- * @param options
+ * @param providedOptions
  * @private
  *
- * @return method string
+ * @return request Object
  */
 
-function checkRequest(requestType, options) {
-	return this.parseOfflineRequests(requestType, options).requestMethod;
-}
+function createRequestObject(method, requestType, providedOptions) {
+	var options = providedOptions || {};
+	var url = method === GET ? getFullUrl.call(this) + '/api/' + requestType + serialiseHttpData.call(this, options) : getFullUrl.call(this) + '/api/' + requestType;
 
-function transformGETRequest(baseRequestObject, requestType, options) {
-	var requestMethod = 'GET';
-	var requestUrlBase = getFullUrl.call(this) + '/api/' + requestType;
-	var requestUrl = Object.keys(options).length ? requestUrlBase + serialiseHttpData.call(this, options, requestMethod) : requestUrlBase;
-	var requestParams = options;
-	return Object.assign({}, baseRequestObject, {
-		requestMethod: requestMethod,
-		requestUrl: requestUrl,
-		requestParams: requestParams
-	});
-}
-
-function transformPUTOrPOSTRequest(baseRequestObject, requestType, options) {
-	var transformRequest = this.parseOfflineRequests(requestType, options).checkOfflineRequestBefore();
-
-	return transformRequest.requestUrl === 'transactions' || transformRequest.requestUrl === 'signatures' ? Object.assign({}, {
-		requestUrl: getFullUrl.call(this) + '/peer/' + transformRequest.requestUrl,
-		nethash: this.nethash,
-		requestMethod: 'POST',
-		requestParams: transformRequest.params
-	}) : Object.assign({}, baseRequestObject, {
-		requestUrl: getFullUrl.call(this) + '/api/' + transformRequest.requestUrl,
-		requestMethod: transformRequest.requestMethod,
-		requestParams: options
-	});
-}
-
-/**
- * @method changeRequest
- * @param requestType
- * @param options
- * @private
- *
- * @return httpRequest object
- */
-
-function changeRequest(requestType, options) {
-	var defaultRequestObject = {
-		requestMethod: '',
-		requestUrl: '',
-		nethash: '',
-		requestParams: ''
+	return {
+		method: method,
+		url: url,
+		headers: this.nethash,
+		body: method === GET ? {} : options
 	};
-
-	switch (checkRequest.call(this, requestType, options)) {
-		case 'GET':
-			return transformGETRequest.call(this, defaultRequestObject, requestType, options);
-		case 'PUT':
-		case 'POST':
-			return transformPUTOrPOSTRequest.call(this, defaultRequestObject, requestType, options);
-		default:
-			return defaultRequestObject;
-	}
-}
-
-/**
- * @method doPopsicleRequest
- * @param requestValue
- * @private
- *
- * @return APIcall Promise
- */
-
-function doPopsicleRequest(requestValue) {
-	return popsicle.request({
-		method: requestValue.requestMethod,
-		url: requestValue.requestUrl,
-		headers: requestValue.nethash,
-		body: requestValue.requestMethod !== 'GET' ? requestValue.requestParams : ''
-	}).use(popsicle.plugins.parse(['json', 'urlencoded']));
 }
 
 /**
  * @method sendRequestPromise
+ * @param requestMethod
  * @param requestType
  * @param options
  * @private
@@ -297,15 +251,41 @@ function doPopsicleRequest(requestValue) {
  * @return APIcall Promise
  */
 
-function sendRequestPromise(requestType, options) {
-	if (checkRequest.call(this, requestType, options) !== 'NOACTION') {
-		var requestValues = changeRequest.call(this, requestType, options);
-		return doPopsicleRequest.call(this, requestValues);
-	}
-	return new Promise(function (resolve) {
-		resolve({ done: 'done' });
-	});
+function sendRequestPromise(requestMethod, requestType, options) {
+	var requestObject = createRequestObject.call(this, requestMethod, requestType, options);
+
+	return popsicle.request(requestObject).use(popsicle.plugins.parse(['json', 'urlencoded']));
 }
+
+/**
+ * @method constructRequestData
+ * @param providedObject
+ * @param optionsOrCallback
+ *
+ * @return request object
+ */
+
+var constructRequestData = function constructRequestData(providedObject, optionsOrCallback) {
+	var providedOptions = typeof optionsOrCallback !== 'function' && typeof optionsOrCallback !== 'undefined' ? optionsOrCallback : {};
+	return Object.assign({}, providedOptions, providedObject);
+};
+
+/**
+ * @method wrapSendRequest
+ * @param method
+ * @param endpoint
+ * @param getDataFn
+ *
+ * @return function wrappedSendRequest
+ */
+
+var wrapSendRequest = function wrapSendRequest(method, endpoint, getDataFn) {
+	return function wrappedSendRequest(value, optionsOrCallback, callbackIfOptions) {
+		var callback = callbackIfOptions || optionsOrCallback;
+		var data = constructRequestData(getDataFn(value, optionsOrCallback), optionsOrCallback);
+		return this.sendRequest(method, endpoint, data, callback);
+	};
+};
 
 module.exports = {
 	netHashOptions: netHashOptions,
@@ -317,8 +297,8 @@ module.exports = {
 	checkReDial: checkReDial,
 	checkOptions: checkOptions,
 	sendRequestPromise: sendRequestPromise,
-	doPopsicleRequest: doPopsicleRequest,
-	changeRequest: changeRequest,
-	checkRequest: checkRequest,
-	serialiseHttpData: serialiseHttpData
+	serialiseHttpData: serialiseHttpData,
+	createRequestObject: createRequestObject,
+	constructRequestData: constructRequestData,
+	wrapSendRequest: wrapSendRequest
 };

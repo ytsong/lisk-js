@@ -56,8 +56,7 @@ function createDelegate(secret, username, secondSecret, timeOffset) {
     timestamp: _slots2.default.getTimeWithOffset(timeOffset),
     asset: {
       delegate: {
-        username: username,
-        publicKey: keys.publicKey
+        username: username
       }
     }
   };

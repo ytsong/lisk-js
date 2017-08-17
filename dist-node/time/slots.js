@@ -47,6 +47,8 @@ function getEpochTime(givenTime) {
  * @type Number
  */
 
+var interval = 10;
+
 /**
  * `delegates` is stored as a number in amount of delegates. Value is 11.
  * @property delegates
@@ -55,7 +57,6 @@ function getEpochTime(givenTime) {
  * @type Number
  */
 
-var interval = 10;
 var delegates = 11;
 
 /**

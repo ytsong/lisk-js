@@ -1,5 +1,19 @@
 "use strict";
 
+/*
+ * Copyright © 2017 Lisk Foundation
+ *
+ * See the LICENSE file at the top-level directory of this distribution
+ * for licensing information.
+ *
+ * Unless otherwise agreed in a custom licensing agreement with the Lisk Foundation,
+ * no part of this software, including this file, may be copied, modified,
+ * propagated, or distributed except according to the terms contained in the
+ * LICENSE file.
+ *
+ * Removal or modification of this copyright notice is prohibited.
+ *
+ */
 /**
  * `constants` are the objects containing information about the fee size for different tranasctions.
  *
@@ -19,22 +33,22 @@ var multisignatureFee = 5 * fixedPoint;
 var dappFee = 25 * fixedPoint;
 
 module.exports = {
-	fixedPoint: fixedPoint,
-	fees: {
-		send: sendFee,
-		signature: signatureFee,
-		delegate: delegateFee,
-		vote: voteFee,
-		multisignature: multisignatureFee,
-		dapp: dappFee,
-		data: dataFee
-	},
-	fee: {
-		0: sendFee,
-		1: signatureFee,
-		2: delegateFee,
-		3: voteFee,
-		4: multisignatureFee,
-		5: dappFee
-	}
+  fixedPoint: fixedPoint,
+  fees: {
+    send: sendFee,
+    signature: signatureFee,
+    delegate: delegateFee,
+    vote: voteFee,
+    multisignature: multisignatureFee,
+    dapp: dappFee,
+    data: dataFee
+  },
+  fee: {
+    0: sendFee,
+    1: signatureFee,
+    2: delegateFee,
+    3: voteFee,
+    4: multisignatureFee,
+    5: dappFee
+  }
 };

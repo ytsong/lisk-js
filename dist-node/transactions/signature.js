@@ -42,13 +42,10 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * @class signature
  */
 function newSignature(secondSecret) {
-  var keys = _crypto2.default.getKeys(secondSecret);
+  var _crypto$getKeys = _crypto2.default.getKeys(secondSecret),
+      publicKey = _crypto$getKeys.publicKey;
 
-  var signature = {
-    publicKey: keys.publicKey
-  };
-
-  return signature;
+  return { publicKey: publicKey };
 }
 
 /**
