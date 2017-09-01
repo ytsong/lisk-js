@@ -18,6 +18,7 @@ lib-cov
 
 # Coverage directory used by tools like istanbul
 coverage
+test/.coverage-unit
 
 # nyc test coverage
 .nyc_output
@@ -48,7 +49,6 @@ jspm_packages
 yuidoc
 
 # Distribution folders
-dist-browser
 dist-node
 
 # Built test files
