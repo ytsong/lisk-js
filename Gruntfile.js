@@ -26,7 +26,7 @@ module.exports = function configureGrunt(grunt) {
 				dest: './dist-browser/lisk-js.js',
 			},
 			test: {
-				src: './browsertest/test/**/*.js',
+				src: ['./browsertest/test/setup.js', './browsertest/test/**/*.js'],
 				dest: './browsertest/browsertest.js',
 			},
 			options: {
