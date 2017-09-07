@@ -14,11 +14,7 @@
  */
 import cryptoModule from '../../src/crypto/index';
 
-describe('crypto/index.js', () => {
-	it('should be ok', () => {
-		(cryptoModule).should.be.ok();
-	});
-
+describe('crypto index.js', () => {
 	it('should be object', () => {
 		(cryptoModule).should.be.type('object');
 	});
