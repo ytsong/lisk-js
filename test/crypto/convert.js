@@ -31,14 +31,14 @@ describe('convert', () => {
 	// keys for secret 'secret';
 	const defaultPrivateKey = '2bb80d537b1da3e38bd30361aa855686bde0eacd7162fef6a25fe97bf527a25b5d036a858ce89f844491762eb89e2bfbd50a4a0a0da658e4b2628b25b117ae09';
 	const defaultPublicKey = '5d036a858ce89f844491762eb89e2bfbd50a4a0a0da658e4b2628b25b117ae09';
-	const defaultPublicKeyHash = new Uint8Array(Buffer.from('3a971fd02b4a07fc20aad1936d3cb1d263b96e0ffd938625e5c0db1ad8ba2a29', 'hex'));
+	const defaultPublicKeyHash = Buffer.from('3a971fd02b4a07fc20aad1936d3cb1d263b96e0ffd938625e5c0db1ad8ba2a29', 'hex');
 	const defaultPrivateKeyCurve = Buffer.from('6073c8f6198112b558bb5a98d150f3a0e35fb2b7a9c192cae1bbf37752df1950', 'hex');
 	const defaultPublicKeyCurve = Buffer.from('d4e56ce5d0c7e2d4a9f05813ba37882985ee13a3f511bc6f99b905b2f87cdf11', 'hex');
 	const defaultAddress = '18160565574430594874L';
-	const defaultBuffer = naclInstance.encode_utf8('\xe5\xe4\xf6');
+	const defaultBuffer = Buffer.from('åäö');
 	const defaultHex = 'c3a5c3a4c3b6';
 	const defaultTransactionId = '13987348420913138422';
-	const defaultTransactionHash = new Uint8Array(Buffer.from('f60a26da470b1dc233fd526ed7306c1d84836f9e2ecee82c9ec47319e0910474', 'hex'));
+	const defaultTransactionHash = Buffer.from('f60a26da470b1dc233fd526ed7306c1d84836f9e2ecee82c9ec47319e0910474', 'hex');
 
 	let getSha256HashStub;
 	let getTransactionBytesStub;
@@ -81,7 +81,7 @@ describe('convert', () => {
 
 	describe('#getAddressFromPublicKey', () => {
 		beforeEach(() => {
-			getSha256HashStub = sinon.stub(hash, 'getSha256Hash').returns(defaultPublicKeyHash);
+			getSha256HashStub = sinon.stub(hash, 'getSha256Hash').returns(new Uint8Array(defaultPublicKeyHash));
 		});
 
 		afterEach(() => {
@@ -96,7 +96,7 @@ describe('convert', () => {
 
 	describe('#getAddress', () => {
 		beforeEach(() => {
-			getSha256HashStub = sinon.stub(hash, 'getSha256Hash').returns(defaultPublicKeyHash);
+			getSha256HashStub = sinon.stub(hash, 'getSha256Hash').returns(new Uint8Array(defaultPublicKeyHash));
 		});
 
 		afterEach(() => {
@@ -111,7 +111,7 @@ describe('convert', () => {
 
 	describe('#getId', () => {
 		beforeEach(() => {
-			getSha256HashStub = sinon.stub(hash, 'getSha256Hash').returns(defaultTransactionHash);
+			getSha256HashStub = sinon.stub(hash, 'getSha256Hash').returns(new Uint8Array(defaultTransactionHash));
 			getTransactionBytesStub = sinon.stub(transactionBytes, 'getTransactionBytes');
 		});
 
